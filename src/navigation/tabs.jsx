@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home, Matches } from '../screens';
+import { Favorites, Home } from '../screens';
 
 const Tab = createBottomTabNavigator();
 
@@ -7,7 +7,7 @@ const TabNavigator = () => {
 	return (
 		<Tab.Navigator>
 			<Tab.Screen name="Home" component={Home} />
-			<Tab.Screen name="Matches" component={Matches} />
+			<Tab.Screen name="Favorites" component={Favorites} />
 		</Tab.Navigator>
 	);
 };

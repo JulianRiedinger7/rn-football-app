@@ -1,15 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
-const Matches = () => {
+const Favorites = () => {
 	return (
 		<View style={styles.container}>
-			<Text>Matches</Text>
+			<Text>Favorites</Text>
 		</View>
 	);
 };
 
-export default Matches;
+export default Favorites;
 
 const styles = StyleSheet.create({
 	container: {

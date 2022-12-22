@@ -4,7 +4,7 @@ import AuthNavigator from './auth';
 import TabNavigator from './tabs';
 
 const AppNavigator = () => {
-	const [user, setUser] = useState(false);
+	const [user, setUser] = useState(true);
 
 	return (
 		<NavigationContainer>

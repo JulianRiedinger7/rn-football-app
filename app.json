@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rn-football",
-    "slug": "rn-football",
+    "name": "freegamesapp",
+    "slug": "freegamesapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

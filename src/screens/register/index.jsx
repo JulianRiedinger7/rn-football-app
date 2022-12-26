@@ -1,4 +1,5 @@
 import {
+	Alert,
 	Button,
 	ImageBackground,
 	Keyboard,
@@ -10,11 +11,26 @@ import {
 	View,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { COLORS } from '../../constants';
 import { isIOS } from '../../utils';
+import { auth } from '../../constants';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const Register = ({ navigation }) => {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	const onHandleSignUp = async () => {
+		try {
+			await createUserWithEmailAndPassword(auth, email, password);
+			setEmail('');
+			setPassword('');
+		} catch (error) {
+			Alert.alert(error.message);
+		}
+	};
+
 	return (
 		<KeyboardAvoidingView
 			behavior={isIOS ? 'padding' : 'height'}
@@ -38,6 +54,8 @@ const Register = ({ navigation }) => {
 							autoFocus={true}
 							maxLength={30}
 							keyboardType="email-address"
+							value={email}
+							onChangeText={(text) => setEmail(text)}
 						/>
 						<Text style={styles.label}>Password</Text>
 						<TextInput
@@ -48,8 +66,14 @@ const Register = ({ navigation }) => {
 							autoCorrect={false}
 							maxLength={30}
 							keyboardType="default"
+							value={password}
+							onChangeText={(text) => setPassword(text)}
 						/>
-						<Button title="Sign Up" color={COLORS.primary} />
+						<Button
+							title="Sign Up"
+							color={COLORS.primary}
+							onPress={onHandleSignUp}
+						/>
 						<Text style={styles.account}>Already have an account?</Text>
 						<Button
 							title="Sign In"

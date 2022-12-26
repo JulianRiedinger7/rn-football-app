@@ -1,4 +1,5 @@
 import {
+	Alert,
 	Button,
 	ImageBackground,
 	Keyboard,
@@ -10,11 +11,27 @@ import {
 	View,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { COLORS } from '../../constants';
 import { isIOS } from '../../utils';
+import { auth } from '../../constants';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const Login = ({ navigation }) => {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	const onHandleSignIn = async () => {
+		try {
+			await signInWithEmailAndPassword(auth, email, password);
+			console.warn('creado');
+			setEmail('');
+			setPassword('');
+		} catch (error) {
+			Alert.alert(error.message);
+		}
+	};
+
 	return (
 		<KeyboardAvoidingView
 			behavior={isIOS ? 'padding' : 'height'}
@@ -38,6 +55,8 @@ const Login = ({ navigation }) => {
 							autoFocus={true}
 							maxLength={30}
 							keyboardType="email-address"
+							value={email}
+							onChangeText={(text) => setEmail(text)}
 						/>
 						<Text style={styles.label}>Password</Text>
 						<TextInput
@@ -48,8 +67,14 @@ const Login = ({ navigation }) => {
 							autoCorrect={false}
 							maxLength={30}
 							keyboardType="default"
+							value={password}
+							onChangeText={(text) => setPassword(text)}
 						/>
-						<Button title="Sign In" color={COLORS.primary} />
+						<Button
+							title="Sign In"
+							color={COLORS.primary}
+							onPress={onHandleSignIn}
+						/>
 						<Text style={styles.account}>Don't have an account?</Text>
 						<Button
 							title="Sign Up"

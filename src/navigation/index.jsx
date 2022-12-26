@@ -1,14 +1,15 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import AuthNavigator from './auth';
 import TabNavigator from './tabs';
 
 const AppNavigator = () => {
-	const [user, setUser] = useState(false);
+	const user = useSelector((state) => state.user.data);
 
 	return (
 		<NavigationContainer>
-			{user ? <TabNavigator /> : <AuthNavigator />}
+			{user?.photoURL ? <TabNavigator /> : <AuthNavigator />}
 		</NavigationContainer>
 	);
 };

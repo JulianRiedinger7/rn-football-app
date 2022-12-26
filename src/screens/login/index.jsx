@@ -16,15 +16,26 @@ import { COLORS } from '../../constants';
 import { isIOS } from '../../utils';
 import { auth } from '../../constants';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../store/userSlice';
 
 const Login = ({ navigation }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const dispatch = useDispatch();
+	const user = useSelector((state) => state.user.data);
 
 	const onHandleSignIn = async () => {
 		try {
-			await signInWithEmailAndPassword(auth, email, password);
-			console.warn('creado');
+			const signedUser = await signInWithEmailAndPassword(
+				auth,
+				email,
+				password
+			);
+			dispatch(setUser(signedUser.user));
+
+			if (!user.photoURL) navigation.navigate('Profile');
+
 			setEmail('');
 			setPassword('');
 		} catch (error) {

@@ -16,14 +16,23 @@ import { COLORS } from '../../constants';
 import { isIOS } from '../../utils';
 import { auth } from '../../constants';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../store/userSlice';
 
 const Register = ({ navigation }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const dispatch = useDispatch();
 
 	const onHandleSignUp = async () => {
 		try {
-			await createUserWithEmailAndPassword(auth, email, password);
+			const signedUser = await createUserWithEmailAndPassword(
+				auth,
+				email,
+				password
+			);
+			dispatch(setUser(signedUser.user));
+			navigation.navigate('Profile');
 			setEmail('');
 			setPassword('');
 		} catch (error) {

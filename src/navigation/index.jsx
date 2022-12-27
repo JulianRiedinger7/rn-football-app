@@ -7,9 +7,10 @@ import TabNavigator from './tabs';
 const AppNavigator = () => {
 	const user = useSelector((state) => state.user.data);
 
+	/* later change user ? to user?.photoURL ? */
 	return (
 		<NavigationContainer>
-			{user?.photoURL ? <TabNavigator /> : <AuthNavigator />}
+			{user ? <TabNavigator /> : <AuthNavigator />}
 		</NavigationContainer>
 	);
 };

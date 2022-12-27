@@ -16,7 +16,7 @@ const Home = () => {
 		'https://www.freetogame.com/api/games'
 	);
 
-	const renderItem = ({ item }) => <GameItem {...item} />;
+	const renderItem = ({ item }) => <GameItem game={item} />;
 
 	console.log(info);
 

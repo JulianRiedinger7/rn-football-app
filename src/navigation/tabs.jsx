@@ -1,7 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { Favorites, Home } from '../screens';
+import { Favorites } from '../screens';
 import { COLORS } from '../constants';
+import GamesNavigator from './games';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,12 +21,12 @@ const TabNavigator = () => {
 			}}
 		>
 			<Tab.Screen
-				name="Home"
-				component={Home}
+				name="Games"
+				component={GamesNavigator}
 				options={{
 					tabBarIcon: ({ focused }) => (
 						<Ionicons
-							name={focused ? 'home' : 'home-outline'}
+							name={focused ? 'game-controller' : 'game-controller-outline'}
 							size={30}
 							color={focused ? COLORS.primary : COLORS.primaryDark}
 						/>

@@ -10,7 +10,7 @@ const AppNavigator = () => {
 	/* later change user ? to user?.photoURL ? */
 	return (
 		<NavigationContainer>
-			{user ? <TabNavigator /> : <AuthNavigator />}
+			{user?.photoURL ? <TabNavigator /> : <AuthNavigator />}
 		</NavigationContainer>
 	);
 };

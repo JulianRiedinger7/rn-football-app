@@ -41,7 +41,7 @@ const Profile = ({ navigation }) => {
 						<TextInput
 							placeholder="Enter a username..."
 							style={styles.input}
-							autoCapitalize="none"
+							autoCapitalize
 							autoCorrect={false}
 							autoFocus={true}
 							maxLength={15}

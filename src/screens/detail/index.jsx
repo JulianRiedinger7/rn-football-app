@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Linking,
 } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -38,11 +39,13 @@ const Detail = () => {
       <Text style={styles.title}>{title}</Text>
       <Image source={{ uri: thumbnail }} style={styles.image} />
       <View style={styles.infoContainer}>
-        <Text>Genre: {genre}</Text>
-        <Text>Platforms: {platform}</Text>
+        <Text style={styles.info}>Genre: {genre}</Text>
+        <Text style={styles.info}>Platform: {platform}</Text>
       </View>
       <View style={styles.bottomInfoContainer}>
-        <Text>{short_description}</Text>
+        <Text style={styles.description}>{short_description}</Text>
+        <Text style={styles.info}>Release Date: {release_date}</Text>
+        <Text style={styles.info}>Developer: {developer}</Text>
         <Button
           title="Check Website"
           color={COLORS.primary}
@@ -79,6 +82,14 @@ const styles = StyleSheet.create({
   },
   bottomInfoContainer: {
     paddingHorizontal: 30,
-    paddingVertical: 10,
+    paddingVertical: 5,
+  },
+  info: {
+    fontSize: 15,
+    fontWeight: "600",
+    marginVertical: 5,
+  },
+  description: {
+    lineHeight: 22,
   },
 });

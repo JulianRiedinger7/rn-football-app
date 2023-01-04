@@ -12,7 +12,7 @@ const gamesSlice = createSlice({
 		selectGame: (state, action) => {
 			state.selected = action.payload;
 		},
-		addToFavorites: (state, action) => {
+		changeFavorites: (state, action) => {
 			const favoriteFinded = state.favorites.find(favorite => favorite.id === action.payload.id)
 			if(favoriteFinded){
 				state.favorites = state.favorites.filter(favorite => favorite.id !== action.payload.id)
@@ -24,6 +24,6 @@ const gamesSlice = createSlice({
 	},
 });
 
-export const { selectGame,addToFavorites } = gamesSlice.actions;
+export const { selectGame,changeFavorites } = gamesSlice.actions;
 
 export default gamesSlice.reducer;

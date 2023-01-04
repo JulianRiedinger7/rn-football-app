@@ -12,7 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { COLORS } from "../../constants";
-import { addToFavorites } from "../../store/gamesSlice";
+import { changeFavorites } from "../../store/gamesSlice";
 
 const Detail = () => {
   const [favorite, setFavorite] = useState(false);
@@ -42,7 +42,7 @@ const Detail = () => {
 
   const onHandleFavorite = () => {
     setFavorite(!favorite);
-    dispatch(addToFavorites(game));
+    dispatch(changeFavorites(game));
   };
 
   return (

@@ -12,9 +12,12 @@ const gamesSlice = createSlice({
 		selectGame: (state, action) => {
 			state.selected = action.payload;
 		},
+		addToFavorites: (state, action) => {
+			state.favorites.push(action.payload)
+		}
 	},
 });
 
-export const { selectGame } = gamesSlice.actions;
+export const { selectGame,addToFavorites } = gamesSlice.actions;
 
 export default gamesSlice.reducer;

@@ -6,13 +6,19 @@ import {
   Text,
   View,
   Linking,
+  TouchableOpacity,
 } from "react-native";
-import React from "react";
-import { useSelector } from "react-redux";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { COLORS } from "../../constants";
+import { addToFavorites } from "../../store/gamesSlice";
 
 const Detail = () => {
+  const [favorite, setFavorite] = useState(false);
   const game = useSelector((state) => state.games.selected);
+  const dispatch = useDispatch();
+
   const {
     title,
     developer,
@@ -34,9 +40,29 @@ const Detail = () => {
     }
   };
 
+  const onHandleFavorite = () => {
+    setFavorite(true);
+    dispatch(addToFavorites(game));
+  };
+
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
+      <View style={styles.topContainer}>
+        <Text style={styles.title}>{title}</Text>
+        <TouchableOpacity
+          style={styles.favoriteContainer}
+          onPress={onHandleFavorite}
+        >
+          <Text style={styles.favorite}>
+            {favorite ? "Remove Favorite" : "Add Favorite"}
+          </Text>
+          <Ionicons
+            name={favorite ? "heart" : "heart-outline"}
+            color={COLORS.tertiary}
+            size={30}
+          />
+        </TouchableOpacity>
+      </View>
       <Image source={{ uri: thumbnail }} style={styles.image} />
       <View style={styles.infoContainer}>
         <Text style={styles.info}>Genre: {genre}</Text>
@@ -63,11 +89,26 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 30,
   },
+  topContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
   title: {
-    fontSize: 25,
+    fontSize: 26,
     fontWeight: "bold",
     alignSelf: "center",
     marginVertical: 10,
+    color: COLORS.primaryDark,
+  },
+  favoriteContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  favorite: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: COLORS.primaryDark,
   },
   image: {
     width: "90%",
@@ -78,6 +119,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-around",
   },
   bottomInfoContainer: {
@@ -88,8 +130,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "600",
     marginVertical: 5,
+    color: COLORS.text,
   },
   description: {
     lineHeight: 22,
+    color: COLORS.text,
   },
 });

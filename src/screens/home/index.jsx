@@ -18,8 +18,6 @@ const Home = () => {
 
   const renderItem = ({ item }) => <GameItem game={item} />;
 
-  console.log(info);
-
   return (
     <SafeAreaView style={styles.container}>
       {loading ? (
@@ -52,5 +50,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     alignSelf: "center",
+    color: COLORS.primaryDark,
   },
 });

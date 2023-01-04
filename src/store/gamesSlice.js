@@ -13,7 +13,13 @@ const gamesSlice = createSlice({
 			state.selected = action.payload;
 		},
 		addToFavorites: (state, action) => {
-			state.favorites.push(action.payload)
+			const favoriteFinded = state.favorites.find(favorite => favorite.id === action.payload.id)
+			if(favoriteFinded){
+				state.favorites = state.favorites.filter(favorite => favorite.id !== action.payload.id)
+			} else {
+				state.favorites.push(action.payload)
+			}
+			
 		}
 	},
 });

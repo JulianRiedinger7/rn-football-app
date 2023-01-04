@@ -41,7 +41,7 @@ const Detail = () => {
   };
 
   const onHandleFavorite = () => {
-    setFavorite(true);
+    setFavorite(!favorite);
     dispatch(addToFavorites(game));
   };
 
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
+    flexWrap: "wrap",
   },
   title: {
     fontSize: 26,

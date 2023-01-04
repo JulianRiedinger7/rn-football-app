@@ -32,7 +32,6 @@ export default Favorite
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
 		margin: 20,
 		paddingBottom: 15,
 		flexDirection: 'row',
@@ -50,6 +49,7 @@ const styles = StyleSheet.create({
 	},
 	rightContainer: {
 		justifyContent: 'space-around',
+		flexShrink: 1,
 	},
 	title: {
 		fontSize: 21,

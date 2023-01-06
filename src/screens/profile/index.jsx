@@ -1,82 +1,91 @@
 import {
 	Button,
-	ImageBackground,
-	Keyboard,
-	KeyboardAvoidingView,
+	SafeAreaView,
 	StyleSheet,
 	Text,
 	TextInput,
-	TouchableWithoutFeedback,
 	View,
-} from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { COLORS } from '../../constants';
-import { isIOS } from '../../utils';
-import { useDispatch, useSelector } from 'react-redux';
-import { ImageSelector } from '../../components';
+	StatusBar as Status,
+	Image,
+} from 'react-native'
+import { StatusBar } from 'expo-status-bar'
+import React, { useState } from 'react'
+import { COLORS } from '../../constants'
+import { useDispatch, useSelector } from 'react-redux'
+import { ImageSelector } from '../../components'
 
 const Profile = ({ navigation }) => {
-	const [username, setUsername] = useState('');
-	const dispatch = useDispatch();
-	const user = useSelector((state) => state.user.data);
-
-	console.warn(user);
+	const [username, setUsername] = useState('')
+	const dispatch = useDispatch()
+	const user = useSelector((state) => state.user.data)
 
 	return (
-		<KeyboardAvoidingView
-			behavior={isIOS ? 'padding' : 'height'}
-			style={{ flex: 1 }}
-		>
-			<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-				<ImageBackground
-					source={require('../../../assets/auth-background.jpg')}
-					style={styles.container}
-					resizeMode="cover"
-				>
-					<StatusBar style="light" />
-					<View style={styles.formContainer}>
-						<Text style={styles.title}>Last Step</Text>
-						<Text style={styles.label}>Username</Text>
-						<TextInput
-							placeholder="Enter a username..."
-							style={styles.input}
-							autoCapitalize
-							autoCorrect={false}
-							autoFocus={true}
-							maxLength={15}
-							value={username}
-							onChangeText={(text) => setUsername(text)}
-						/>
-						<ImageSelector />
-						<Button title="Finish" color={COLORS.secondary} disabled />
-					</View>
-				</ImageBackground>
-			</TouchableWithoutFeedback>
-		</KeyboardAvoidingView>
-	);
-};
+		<SafeAreaView style={styles.container}>
+			<StatusBar style="light" />
+			<Text style={styles.title}>Complete your Profile</Text>
+			<View style={styles.topContainer}>
+				<Text style={styles.currentAvatar}>Current Photo:</Text>
+				<Image
+					source={require('../../../assets/usuario.png')}
+					style={styles.image}
+				/>
+			</View>
+			<View style={styles.formContainer}>
+				<Text style={styles.label}>Username</Text>
+				<TextInput
+					placeholder="Enter a username..."
+					style={styles.input}
+					autoCapitalize
+					autoCorrect={false}
+					autoFocus={true}
+					maxLength={15}
+					value={username}
+					onChangeText={(text) => setUsername(text)}
+				/>
+				<ImageSelector />
+				<Button title="Save Profile" color={COLORS.secondary} disabled />
+			</View>
+		</SafeAreaView>
+	)
+}
 
-export default Profile;
+export default Profile
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: 'center',
+		backgroundColor: COLORS.background,
+		paddingTop: Status.currentHeight,
+	},
+	title: {
+		marginVertical: 10,
+		fontSize: 25,
+		fontWeight: 'bold',
+		alignSelf: 'center',
+		color: COLORS.primaryDark,
+	},
+	topContainer: {
+		flexDirection: 'row',
 		alignItems: 'center',
+		justifyContent: 'space-around',
+		marginBottom: 20,
+	},
+	currentAvatar: {
+		fontWeight: '600',
+		fontSize: 16,
+	},
+	image: {
+		width: 50,
+		height: 50,
 	},
 	formContainer: {
 		backgroundColor: COLORS.white,
 		width: '70%',
+		alignSelf: 'center',
+		justifyContent: 'center',
 		opacity: 0.85,
 		borderRadius: 10,
 		padding: 20,
-	},
-	title: {
-		alignSelf: 'center',
-		fontSize: 22,
-		fontWeight: 'bold',
-		color: COLORS.text,
 	},
 	label: {
 		fontWeight: '500',
@@ -89,4 +98,4 @@ const styles = StyleSheet.create({
 		paddingVertical: 5,
 		borderBottomWidth: 1,
 	},
-});
+})

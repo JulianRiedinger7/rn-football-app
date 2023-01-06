@@ -1,10 +1,10 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
-import { Favorites } from '../screens';
-import { COLORS } from '../constants';
-import GamesNavigator from './games';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { Ionicons } from '@expo/vector-icons'
+import { Favorites, Profile } from '../screens'
+import { COLORS } from '../constants'
+import GamesNavigator from './games'
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator()
 
 const TabNavigator = () => {
 	return (
@@ -46,8 +46,21 @@ const TabNavigator = () => {
 					),
 				}}
 			/>
+			<Tab.Screen
+				name="Profile"
+				component={Profile}
+				options={{
+					tabBarIcon: ({ focused }) => (
+						<Ionicons
+							name={focused ? 'person' : 'person-outline'}
+							size={30}
+							color={focused ? COLORS.primary : COLORS.primaryDark}
+						/>
+					),
+				}}
+			/>
 		</Tab.Navigator>
-	);
-};
+	)
+}
 
-export default TabNavigator;
+export default TabNavigator

@@ -10,12 +10,14 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native'
+import { useSelector } from 'react-redux'
 import { GameItem } from '../../components'
 import { COLORS } from '../../constants'
 import { useDataFetch } from '../../hooks'
 
 const Home = ({ navigation }) => {
 	const { info, loading } = useDataFetch('https://www.freetogame.com/api/games')
+	const user = useSelector((state) => state.user.data)
 
 	const renderItem = ({ item }) => <GameItem game={item} />
 
@@ -30,11 +32,21 @@ const Home = ({ navigation }) => {
 					<View style={styles.topContainer}>
 						<Text style={styles.title}>Welcome to Freegames</Text>
 						<TouchableOpacity style={styles.touchable} onPress={onHandlePress}>
-							<Text style={styles.user}>User</Text>
-							<Image
-								source={require('../../../assets/usuario.png')}
-								style={styles.image}
-							/>
+							<Text style={styles.user}>
+								{user.displayName ? user.displayName : 'User'}
+							</Text>
+							{user.photoURL ? (
+								<Image
+									source={{ uri: user.photoURL }}
+									resizeMode="contain"
+									style={styles.image}
+								/>
+							) : (
+								<Image
+									source={require('../../../assets/usuario.png')}
+									style={styles.image}
+								/>
+							)}
 						</TouchableOpacity>
 					</View>
 					<FlatList
@@ -82,5 +94,6 @@ const styles = StyleSheet.create({
 	image: {
 		width: 50,
 		height: 50,
+		borderRadius: 50 / 2,
 	},
 })

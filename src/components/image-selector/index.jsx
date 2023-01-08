@@ -1,39 +1,43 @@
-import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import React, { useState } from 'react';
-import { COLORS } from '../../constants';
+import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native'
+import * as ImagePicker from 'expo-image-picker'
+import React, { useState } from 'react'
+import { COLORS } from '../../constants'
 
-const ImageSelector = () => {
-	const [pickedURL, setPickedURL] = useState(null);
+const ImageSelector = ({ onHandlePickImage }) => {
+	const [pickedURL, setPickedURL] = useState(null)
 
 	const verifyPermissions = async () => {
-		const { status } = await ImagePicker.requestCameraPermissionsAsync();
+		const { status } = await ImagePicker.requestCameraPermissionsAsync()
 
 		if (status !== 'granted') {
 			Alert.alert(
 				'Permissions denied',
 				'You need to authorize the camera to continue',
 				[{ text: 'OK' }]
-			);
-			return false;
+			)
+			return false
 		}
-		return true;
-	};
+		return true
+	}
 
 	const onHandleImagePicker = async () => {
-		const grantedPermissions = await verifyPermissions();
+		const grantedPermissions = await verifyPermissions()
 
-		if (!grantedPermissions) return;
+		if (!grantedPermissions) return
 
 		const result = await ImagePicker.launchCameraAsync({
+			allowsEditing: true,
 			aspect: [16, 9],
 			quality: 0.7,
-		});
+		})
 
-		console.warn('image', result);
+		if (!result.canceled) {
+			setPickedURL(result.assets[0].uri)
+			onHandlePickImage(result.assets[0].uri)
+		}
 
-		setPickedURL(result.uri);
-	};
+		console.warn('image', result)
+	}
 
 	return (
 		<>
@@ -46,14 +50,14 @@ const ImageSelector = () => {
 			</View>
 			<Button
 				title="Upload Photo"
-				color={COLORS.primary}
+				color={COLORS.secondary}
 				onPress={onHandleImagePicker}
 			/>
 		</>
-	);
-};
+	)
+}
 
-export default ImageSelector;
+export default ImageSelector
 
 const styles = StyleSheet.create({
 	photoContainer: {
@@ -73,4 +77,4 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: '100%',
 	},
-});
+})

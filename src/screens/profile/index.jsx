@@ -12,12 +12,22 @@ import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
 import { COLORS } from '../../constants'
 import { useDispatch, useSelector } from 'react-redux'
+import { changeUsernameAndPhoto } from '../../store/userSlice'
 import { ImageSelector } from '../../components'
 
 const Profile = ({ navigation }) => {
 	const [username, setUsername] = useState('')
+	const [imagePicked, setImagePicked] = useState(null)
 	const dispatch = useDispatch()
 	const user = useSelector((state) => state.user.data)
+
+	const onHandlePickImage = (uri) => setImagePicked(uri)
+
+	const onHandleSave = () => {
+		dispatch(changeUsernameAndPhoto({ username, photo: imagePicked }))
+		setUsername('')
+		setImagePicked(null)
+	}
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -25,10 +35,22 @@ const Profile = ({ navigation }) => {
 			<Text style={styles.title}>Complete your Profile</Text>
 			<View style={styles.topContainer}>
 				<Text style={styles.currentAvatar}>Current Photo:</Text>
-				<Image
-					source={require('../../../assets/usuario.png')}
-					style={styles.image}
-				/>
+				{user.photoURL ? (
+					<Image
+						source={{ uri: user.photoURL }}
+						style={styles.image}
+						resizeMode="contain"
+					/>
+				) : (
+					<Image
+						source={require('../../../assets/usuario.png')}
+						style={styles.image}
+					/>
+				)}
+			</View>
+			<View style={styles.topContainer}>
+				<Text style={styles.currentAvatar}>Current Username:</Text>
+				{user.displayName ? <Text>{user.displayName}</Text> : <Text>User</Text>}
 			</View>
 			<View style={styles.formContainer}>
 				<Text style={styles.label}>Username</Text>
@@ -42,8 +64,15 @@ const Profile = ({ navigation }) => {
 					value={username}
 					onChangeText={(text) => setUsername(text)}
 				/>
-				<ImageSelector />
-				<Button title="Save Profile" color={COLORS.secondary} disabled />
+				<ImageSelector onHandlePickImage={onHandlePickImage} />
+				<View style={styles.saveContainer}>
+					<Button
+						title="Save Profile"
+						color={COLORS.primary}
+						disabled={!username || !imagePicked}
+						onPress={onHandleSave}
+					/>
+				</View>
 			</View>
 		</SafeAreaView>
 	)
@@ -77,12 +106,12 @@ const styles = StyleSheet.create({
 	image: {
 		width: 50,
 		height: 50,
+		borderRadius: 50 / 2,
 	},
 	formContainer: {
 		backgroundColor: COLORS.white,
 		width: '70%',
 		alignSelf: 'center',
-		justifyContent: 'center',
 		opacity: 0.85,
 		borderRadius: 10,
 		padding: 20,
@@ -97,5 +126,8 @@ const styles = StyleSheet.create({
 		marginBottom: 5,
 		paddingVertical: 5,
 		borderBottomWidth: 1,
+	},
+	saveContainer: {
+		marginTop: 10,
 	},
 })

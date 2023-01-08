@@ -7,10 +7,7 @@ const useDataFetch = (url) => {
 	useEffect(() => {
 		fetch(url)
 			.then((res) => res.json())
-			.then((res) => {
-				console.log(res);
-				setInfo(res);
-			})
+			.then((res) => setInfo(res))
 			.catch((err) => console.error(err))
 			.finally(() => setLoading(false));
 	}, []);

@@ -1,4 +1,5 @@
-export { default as GameItem } from './game-item';
-export { default as ImageSelector } from './image-selector';
+export { default as GameItem } from './game-item'
+export { default as ImageSelector } from './image-selector'
 export { default as PasswordInput } from './password-input'
 export { default as Favorite } from './favorite'
+export { default as Category } from './category'

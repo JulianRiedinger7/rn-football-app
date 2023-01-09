@@ -3,6 +3,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { selectGame } from '../../store/gamesSlice'
 import { useNavigation } from '@react-navigation/native'
+import { width, height } from '../../utils'
 
 const GameItem = ({ game }) => {
 	const { title, thumbnail } = game || {}
@@ -26,8 +27,8 @@ export default GameItem
 
 const styles = StyleSheet.create({
 	image: {
-		width: 180,
-		height: 180,
+		width: width * 0.43,
+		height: height * 0.17,
 		borderRadius: 30,
 		resizeMode: 'contain',
 	},

@@ -48,6 +48,7 @@ const Detail = () => {
 
 	return (
 		<ScrollView style={styles.container}>
+			<StatusBar style="dark" />
 			<View style={styles.topContainer}>
 				<Text style={styles.title}>{title}</Text>
 				<TouchableOpacity
@@ -88,7 +89,8 @@ export default Detail
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		marginTop: 30,
+		paddingTop: 30,
+		backgroundColor: COLORS.background,
 	},
 	topContainer: {
 		flexDirection: 'row',

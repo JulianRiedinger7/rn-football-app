@@ -59,7 +59,6 @@ const Profile = ({ navigation }) => {
 					style={styles.input}
 					autoCapitalize
 					autoCorrect={false}
-					autoFocus={true}
 					maxLength={15}
 					value={username}
 					onChangeText={(text) => setUsername(text)}

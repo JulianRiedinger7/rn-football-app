@@ -10,14 +10,12 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native'
-import { useSelector } from 'react-redux'
 import { GameItem } from '../../components'
 import { COLORS } from '../../constants'
 import { useDataFetch } from '../../hooks'
 
 const Home = ({ navigation, route }) => {
 	const { info, loading } = useDataFetch('https://www.freetogame.com/api/games')
-	/* const user = useSelector((state) => state.user.data) */
 
 	const { displayName, photoURL } = route.params || {}
 

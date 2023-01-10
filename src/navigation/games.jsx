@@ -1,7 +1,7 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Detail, Home } from '../screens';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { CategoryGames, Detail, Home } from '../screens'
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator()
 
 const GamesNavigator = () => {
 	return (
@@ -14,8 +14,15 @@ const GamesNavigator = () => {
 				}}
 			/>
 			<Stack.Screen name="Detail" component={Detail} />
+			<Stack.Screen
+				name="Category Games"
+				component={CategoryGames}
+				options={{
+					headerShown: false,
+				}}
+			/>
 		</Stack.Navigator>
-	);
-};
+	)
+}
 
-export default GamesNavigator;
+export default GamesNavigator

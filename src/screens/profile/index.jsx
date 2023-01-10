@@ -27,6 +27,10 @@ const Profile = ({ navigation }) => {
 		dispatch(changeUsernameAndPhoto({ username, photo: imagePicked }))
 		setUsername('')
 		setImagePicked(null)
+		navigation.navigate('Home', {
+			displayName: user.displayName,
+			photoURL: user.photoURL,
+		})
 	}
 
 	return (

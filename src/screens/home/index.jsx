@@ -15,9 +15,11 @@ import { GameItem } from '../../components'
 import { COLORS } from '../../constants'
 import { useDataFetch } from '../../hooks'
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, route }) => {
 	const { info, loading } = useDataFetch('https://www.freetogame.com/api/games')
-	const user = useSelector((state) => state.user.data)
+	/* const user = useSelector((state) => state.user.data) */
+
+	const { displayName, photoURL } = route.params || {}
 
 	const renderItem = ({ item }) => <GameItem game={item} />
 
@@ -33,11 +35,11 @@ const Home = ({ navigation }) => {
 						<Text style={styles.title}>Welcome to Freegames</Text>
 						<TouchableOpacity style={styles.touchable} onPress={onHandlePress}>
 							<Text style={styles.user}>
-								{user.displayName ? user.displayName : 'User'}
+								{displayName ? displayName : 'User'}
 							</Text>
-							{user.photoURL ? (
+							{photoURL ? (
 								<Image
-									source={{ uri: user.photoURL }}
+									source={{ uri: photoURL }}
 									resizeMode="contain"
 									style={styles.image}
 								/>

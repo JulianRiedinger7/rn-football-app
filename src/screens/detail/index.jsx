@@ -9,7 +9,7 @@ import {
 	TouchableOpacity,
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { COLORS } from '../../constants'
 import { changeFavorites } from '../../store/gamesSlice'
@@ -18,6 +18,7 @@ import { StatusBar } from 'expo-status-bar'
 const Detail = () => {
 	const [favorite, setFavorite] = useState(false)
 	const game = useSelector((state) => state.games.selected)
+	const favorites = useSelector((state) => state.games.favorites)
 	const dispatch = useDispatch()
 
 	const {
@@ -29,6 +30,7 @@ const Detail = () => {
 		release_date,
 		short_description,
 		thumbnail,
+		id,
 	} = game || {}
 
 	const handlePress = async (url) => {
@@ -45,6 +47,12 @@ const Detail = () => {
 		setFavorite(!favorite)
 		dispatch(changeFavorites(game))
 	}
+
+	useEffect(() => {
+		if (favorites.find((favorite) => favorite.id === id)) {
+			setFavorite(true)
+		}
+	}, [favorites])
 
 	return (
 		<ScrollView style={styles.container}>

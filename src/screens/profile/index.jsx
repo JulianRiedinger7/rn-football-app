@@ -7,13 +7,14 @@ import {
 	View,
 	StatusBar as Status,
 	Image,
+	ScrollView,
 } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
 import { COLORS } from '../../constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeUsernameAndPhoto } from '../../store/userSlice'
-import { ImageSelector } from '../../components'
+import { ImageSelector, LocationSelector } from '../../components'
 
 const Profile = ({ navigation }) => {
 	const [username, setUsername] = useState('')
@@ -22,6 +23,8 @@ const Profile = ({ navigation }) => {
 	const user = useSelector((state) => state.user.data)
 
 	const onHandlePickImage = (uri) => setImagePicked(uri)
+
+	const onHandlePickLocation = () => {}
 
 	const onHandleSave = () => {
 		dispatch(changeUsernameAndPhoto({ username, photo: imagePicked }))
@@ -35,48 +38,55 @@ const Profile = ({ navigation }) => {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<StatusBar style="light" />
-			<Text style={styles.title}>Complete your Profile</Text>
-			<View style={styles.topContainer}>
-				<Text style={styles.currentAvatar}>Current Photo:</Text>
-				{user.photoURL ? (
-					<Image
-						source={{ uri: user.photoURL }}
-						style={styles.image}
-						resizeMode="contain"
-					/>
-				) : (
-					<Image
-						source={require('../../../assets/usuario.png')}
-						style={styles.image}
-					/>
-				)}
-			</View>
-			<View style={styles.topContainer}>
-				<Text style={styles.currentAvatar}>Current Username:</Text>
-				{user.displayName ? <Text>{user.displayName}</Text> : <Text>User</Text>}
-			</View>
-			<View style={styles.formContainer}>
-				<Text style={styles.label}>Username</Text>
-				<TextInput
-					placeholder="Enter a username..."
-					style={styles.input}
-					autoCapitalize
-					autoCorrect={false}
-					maxLength={15}
-					value={username}
-					onChangeText={(text) => setUsername(text)}
-				/>
-				<ImageSelector onHandlePickImage={onHandlePickImage} />
-				<View style={styles.saveContainer}>
-					<Button
-						title="Save Profile"
-						color={COLORS.primary}
-						disabled={!username || !imagePicked}
-						onPress={onHandleSave}
-					/>
+			<ScrollView>
+				<StatusBar style="light" />
+				<Text style={styles.title}>Complete your Profile</Text>
+				<View style={styles.topContainer}>
+					<Text style={styles.currentAvatar}>Current Photo:</Text>
+					{user.photoURL ? (
+						<Image
+							source={{ uri: user.photoURL }}
+							style={styles.image}
+							resizeMode="contain"
+						/>
+					) : (
+						<Image
+							source={require('../../../assets/usuario.png')}
+							style={styles.image}
+						/>
+					)}
 				</View>
-			</View>
+				<View style={styles.topContainer}>
+					<Text style={styles.currentAvatar}>Current Username:</Text>
+					{user.displayName ? (
+						<Text>{user.displayName}</Text>
+					) : (
+						<Text>User</Text>
+					)}
+				</View>
+				<View style={styles.formContainer}>
+					<Text style={styles.label}>Username</Text>
+					<TextInput
+						placeholder="Enter a username..."
+						style={styles.input}
+						autoCapitalize
+						autoCorrect={false}
+						maxLength={15}
+						value={username}
+						onChangeText={(text) => setUsername(text)}
+					/>
+					<ImageSelector onHandlePickImage={onHandlePickImage} />
+					<LocationSelector onHandlePickLocation={onHandlePickLocation} />
+					<View style={styles.saveContainer}>
+						<Button
+							title="Save Profile"
+							color={COLORS.primary}
+							disabled={!username || !imagePicked}
+							onPress={onHandleSave}
+						/>
+					</View>
+				</View>
+			</ScrollView>
 		</SafeAreaView>
 	)
 }
@@ -113,11 +123,12 @@ const styles = StyleSheet.create({
 	},
 	formContainer: {
 		backgroundColor: COLORS.white,
-		width: '70%',
+		width: '80%',
 		alignSelf: 'center',
 		opacity: 0.85,
 		borderRadius: 10,
 		padding: 20,
+		marginBottom: 20,
 	},
 	label: {
 		fontWeight: '500',

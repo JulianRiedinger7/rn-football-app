@@ -35,8 +35,6 @@ const ImageSelector = ({ onHandlePickImage }) => {
 			setPickedURL(result.assets[0].uri)
 			onHandlePickImage(result.assets[0].uri)
 		}
-
-		console.warn('image', result)
 	}
 
 	return (

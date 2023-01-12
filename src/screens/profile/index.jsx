@@ -13,21 +13,28 @@ import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
 import { COLORS } from '../../constants'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeUsernameAndPhoto } from '../../store/userSlice'
+import { changeUserProfile } from '../../store/userSlice'
 import { ImageSelector, LocationSelector } from '../../components'
 
 const Profile = ({ navigation }) => {
 	const [username, setUsername] = useState('')
 	const [imagePicked, setImagePicked] = useState(null)
+	const [locationPicked, setLocationPicked] = useState(null)
 	const dispatch = useDispatch()
 	const user = useSelector((state) => state.user.data)
 
 	const onHandlePickImage = (uri) => setImagePicked(uri)
 
-	const onHandlePickLocation = () => {}
+	const onHandlePickLocation = (location) => setLocationPicked(location)
 
 	const onHandleSave = () => {
-		dispatch(changeUsernameAndPhoto({ username, photo: imagePicked }))
+		dispatch(
+			changeUserProfile({
+				username,
+				photo: imagePicked,
+				location: locationPicked,
+			})
+		)
 		setUsername('')
 		setImagePicked(null)
 		navigation.navigate('Home', {
@@ -81,7 +88,7 @@ const Profile = ({ navigation }) => {
 						<Button
 							title="Save Profile"
 							color={COLORS.primary}
-							disabled={!username || !imagePicked}
+							disabled={!username || !imagePicked || !locationPicked}
 							onPress={onHandleSave}
 						/>
 					</View>

@@ -5,15 +5,30 @@ import {
 	Text,
 	StatusBar,
 } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { COLORS } from '../../constants'
 import { useSelector } from 'react-redux'
 import { Favorite } from '../../components'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { setFavorites } from '../../store/gamesSlice'
 
 const Favorites = () => {
 	const favorites = useSelector((state) => state.games.favorites)
 
 	const renderItem = ({ item }) => <Favorite game={item} />
+
+	useEffect(() => {
+		getFavoritesStorage()
+	}, [favorites])
+
+	const getFavoritesStorage = async () => {
+		try {
+			const value = await AsyncStorage.getItem('favorites')
+			setFavorites(JSON.parse(value))
+		} catch (error) {
+			throw error
+		}
+	}
 
 	return (
 		<SafeAreaView style={styles.container}>

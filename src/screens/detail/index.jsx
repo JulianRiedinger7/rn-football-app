@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { COLORS } from '../../constants'
 import { changeFavorites } from '../../store/gamesSlice'
 import { StatusBar } from 'expo-status-bar'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Detail = () => {
 	const [favorite, setFavorite] = useState(false)
@@ -43,9 +44,14 @@ const Detail = () => {
 		}
 	}
 
-	const onHandleFavorite = () => {
+	const onHandleFavorite = async () => {
 		setFavorite(!favorite)
 		dispatch(changeFavorites(game))
+		try {
+			await AsyncStorage.setItem('favorites', JSON.stringify(favorites))
+		} catch (error) {
+			throw error
+		}
 	}
 
 	useEffect(() => {

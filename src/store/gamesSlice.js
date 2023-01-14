@@ -28,10 +28,13 @@ const gamesSlice = createSlice({
 		selectCategory: (state, action) => {
 			state.category = action.payload
 		},
+		setFavorites: (state, action) => {
+			state.favorites = action.payload
+		},
 	},
 })
 
-export const { selectGame, changeFavorites, selectCategory } =
+export const { selectGame, changeFavorites, selectCategory, setFavorites } =
 	gamesSlice.actions
 
 export default gamesSlice.reducer

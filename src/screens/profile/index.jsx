@@ -8,13 +8,15 @@ import {
 	StatusBar as Status,
 	Image,
 	ScrollView,
+	Alert,
 } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
-import { COLORS } from '../../constants'
+import { auth, COLORS } from '../../constants'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeUserProfile } from '../../store/userSlice'
+import { changeUserProfile, setUser } from '../../store/userSlice'
 import { ImageSelector, LocationSelector } from '../../components'
+import { signOut } from 'firebase/auth/react-native'
 
 const Profile = ({ navigation }) => {
 	const [username, setUsername] = useState('')
@@ -43,11 +45,28 @@ const Profile = ({ navigation }) => {
 		})
 	}
 
+	const onHandleSignOut = async () => {
+		try {
+			await signOut(auth)
+			dispatch(setUser(null))
+			Alert.alert('You have succesfully logged out')
+		} catch (error) {
+			Alert.alert('An error ocurred, try again')
+		}
+	}
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView>
 				<StatusBar style="light" />
-				<Text style={styles.title}>Complete your Profile</Text>
+				<View style={styles.completeContainer}>
+					<Text style={styles.title}>Complete your Profile</Text>
+					<Button
+						title="Sign Out"
+						color={COLORS.tertiary}
+						onPress={onHandleSignOut}
+					/>
+				</View>
 				<View style={styles.topContainer}>
 					<Text style={styles.currentAvatar}>Current Photo:</Text>
 					{user.photoURL ? (
@@ -105,6 +124,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: COLORS.background,
 		paddingTop: Status.currentHeight,
+	},
+	completeContainer: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-around',
 	},
 	title: {
 		marginVertical: 10,

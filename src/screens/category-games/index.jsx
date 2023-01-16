@@ -15,12 +15,8 @@ import { StatusBar } from 'react-native'
 const CategoryGames = () => {
 	let category = useSelector((state) => state.games.category)
 
-	if (category.includes('Game')) category = 'Card'
-
 	const { info, loading } = useDataFetch(
-		`https://www.freetogame.com/api/games?category=${category
-			?.toLowerCase()
-			.replace(' ', '-')}`,
+		`https://www.freetogame.com/api/games?category=${category}`,
 		category
 	)
 

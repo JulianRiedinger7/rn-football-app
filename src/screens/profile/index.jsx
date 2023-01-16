@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-around',
+		flexWrap: 'wrap',
 	},
 	title: {
 		marginVertical: 10,

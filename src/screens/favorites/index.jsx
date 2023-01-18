@@ -4,16 +4,19 @@ import {
 	StyleSheet,
 	Text,
 	StatusBar,
+	View,
 } from 'react-native'
 import React, { useEffect } from 'react'
 import { COLORS } from '../../constants'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Favorite } from '../../components'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { setFavorites } from '../../store/gamesSlice'
+import { Button } from 'react-native'
 
 const Favorites = () => {
 	const favorites = useSelector((state) => state.games.favorites)
+	const dispatch = useDispatch()
 
 	const renderItem = ({ item }) => <Favorite game={item} />
 
@@ -30,15 +33,28 @@ const Favorites = () => {
 		}
 	}
 
+	const onHandleRemoveAll = () => {
+		dispatch(setFavorites([]))
+	}
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<Text style={styles.title}>Favorites</Text>
 			{favorites.length > 0 ? (
-				<FlatList
-					data={favorites}
-					keyExtractor={(i) => i.id.toString()}
-					renderItem={renderItem}
-				/>
+				<>
+					<FlatList
+						data={favorites}
+						keyExtractor={(i) => i.id.toString()}
+						renderItem={renderItem}
+					/>
+					<View style={styles.buttonContainer}>
+						<Button
+							title="Remove All"
+							color={COLORS.tertiary}
+							onPress={onHandleRemoveAll}
+						/>
+					</View>
+				</>
 			) : (
 				<Text style={styles.noFavorites}>No favorites yet...</Text>
 			)}
@@ -65,5 +81,10 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		fontWeight: 'bold',
 		fontSize: 16,
+	},
+	buttonContainer: {
+		alignSelf: 'flex-end',
+		marginBottom: 20,
+		marginRight: 20,
 	},
 })

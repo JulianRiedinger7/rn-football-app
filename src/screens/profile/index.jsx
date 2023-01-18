@@ -17,19 +17,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import { changeUserProfile, setUser } from '../../store/userSlice'
 import { ImageSelector, LocationSelector } from '../../components'
 import { signOut } from 'firebase/auth/react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Profile = ({ navigation }) => {
 	const [username, setUsername] = useState('')
 	const [imagePicked, setImagePicked] = useState(null)
 	const [locationPicked, setLocationPicked] = useState(null)
 	const dispatch = useDispatch()
-	const user = useSelector((state) => state.user.data)
+	let user = useSelector((state) => state.user.data)
+
+	if (typeof user == 'string') user = JSON.parse(user)
 
 	const onHandlePickImage = (uri) => setImagePicked(uri)
 
 	const onHandlePickLocation = (location) => setLocationPicked(location)
 
-	const onHandleSave = () => {
+	const onHandleSave = async () => {
 		dispatch(
 			changeUserProfile({
 				username,
@@ -37,6 +40,11 @@ const Profile = ({ navigation }) => {
 				location: locationPicked,
 			})
 		)
+		try {
+			await AsyncStorage.setItem('user', JSON.stringify(user))
+		} catch (err) {
+			throw err
+		}
 		setUsername('')
 		setImagePicked(null)
 		navigation.navigate('Home', {
@@ -47,6 +55,7 @@ const Profile = ({ navigation }) => {
 
 	const onHandleSignOut = async () => {
 		try {
+			await AsyncStorage.removeItem('user')
 			await signOut(auth)
 			dispatch(setUser(null))
 			Alert.alert('You have succesfully logged out')

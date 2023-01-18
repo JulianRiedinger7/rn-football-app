@@ -44,8 +44,7 @@ const styles = StyleSheet.create({
 	image: {
 		width: 200,
 		height: 150,
-		resizeMode: 'cover',
-		borderRadius: 5,
+		resizeMode: 'contain',
 	},
 	rightContainer: {
 		justifyContent: 'space-around',

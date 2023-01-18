@@ -29,8 +29,16 @@ const styles = StyleSheet.create({
 	image: {
 		width: width * 0.43,
 		height: height * 0.17,
-		borderRadius: 30,
 		resizeMode: 'contain',
+		shadowColor: '#000',
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 3.84,
+
+		elevation: 5,
 	},
 	itemContainer: {
 		padding: 20,

@@ -130,10 +130,9 @@ const styles = StyleSheet.create({
 	},
 	image: {
 		width: '90%',
-		height: 300,
-		resizeMode: 'cover',
+		height: 250,
+		resizeMode: 'contain',
 		alignSelf: 'center',
-		borderRadius: 5,
 	},
 	infoContainer: {
 		flexDirection: 'row',

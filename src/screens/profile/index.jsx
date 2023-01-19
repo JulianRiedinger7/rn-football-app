@@ -1,23 +1,24 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { StatusBar } from 'expo-status-bar'
+import { signOut } from 'firebase/auth/react-native'
+import React, { useState } from 'react'
 import {
+	Alert,
 	Button,
+	Image,
 	SafeAreaView,
+	ScrollView,
+	StatusBar as Status,
 	StyleSheet,
 	Text,
 	TextInput,
 	View,
-	StatusBar as Status,
-	Image,
-	ScrollView,
-	Alert,
 } from 'react-native'
-import { StatusBar } from 'expo-status-bar'
-import React, { useState } from 'react'
-import { auth, COLORS } from '../../constants'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeUserProfile, setUser } from '../../store/userSlice'
 import { ImageSelector, LocationSelector } from '../../components'
-import { signOut } from 'firebase/auth/react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { auth, COLORS } from '../../constants'
+import { clean, init } from '../../db'
+import { changeUserProfile, setUser } from '../../store/userSlice'
 
 const Profile = ({ navigation }) => {
 	const [username, setUsername] = useState('')
@@ -57,6 +58,8 @@ const Profile = ({ navigation }) => {
 		try {
 			await AsyncStorage.removeItem('user')
 			await signOut(auth)
+			await clean()
+			await init()
 			dispatch(setUser(null))
 			Alert.alert('You have succesfully logged out')
 		} catch (error) {

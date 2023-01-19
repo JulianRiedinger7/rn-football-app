@@ -1,20 +1,20 @@
+import { Ionicons } from '@expo/vector-icons'
+import { StatusBar } from 'expo-status-bar'
+import React, { useEffect, useState } from 'react'
 import {
 	Button,
 	Image,
+	Linking,
 	ScrollView,
 	StyleSheet,
 	Text,
-	View,
-	Linking,
 	TouchableOpacity,
+	View,
 } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
-import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { COLORS } from '../../constants'
+import { insertFavorite, removeFavorite } from '../../db'
 import { changeFavorites } from '../../store/gamesSlice'
-import { StatusBar } from 'expo-status-bar'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Detail = () => {
 	const [favorite, setFavorite] = useState(false)
@@ -47,10 +47,19 @@ const Detail = () => {
 	const onHandleFavorite = async () => {
 		setFavorite(!favorite)
 		dispatch(changeFavorites(game))
-		try {
-			await AsyncStorage.setItem('favorites', JSON.stringify(favorites))
-		} catch (error) {
-			throw error
+		if (favorites.find((favorite) => favorite.id === id)) {
+			await removeFavorite(title)
+		} else {
+			await insertFavorite(
+				title,
+				thumbnail,
+				short_description,
+				platform,
+				genre,
+				release_date,
+				developer,
+				game_url
+			)
 		}
 	}
 

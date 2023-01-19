@@ -24,7 +24,7 @@ export const init = () => {
 	const promise = new Promise((resolve, reject) => {
 		db.transaction((tx) => {
 			tx.executeSql(
-				'CREATE TABLE IF NOT EXISTS favorites (id INTEGER PRIMARY KEY NOT NULL, game TEXT NOT NULL);',
+				'CREATE TABLE IF NOT EXISTS favorites (id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, thumbnail TEXT NOT NULL, short_description TEXT NOT NULL, platform TEXT NOT NULL, genre TEXT NOT NULL, release_date TEXT NOT NULL, developer TEXT NOT NULL, game_url TEXT NOT NULL);',
 				[],
 				() => resolve(),
 				(_, err) => reject(err)
@@ -34,12 +34,30 @@ export const init = () => {
 	return promise
 }
 
-export const insertFavorite = (game) => {
+export const insertFavorite = (
+	title,
+	thumbnail,
+	short_description,
+	platform,
+	genre,
+	release_date,
+	developer,
+	game_url
+) => {
 	const promise = new Promise((resolve, reject) => {
 		db.transaction((tx) => {
 			tx.executeSql(
-				'INSERT INTO favorites (game) VALUES (?);',
-				[JSON.stringify(game)],
+				'INSERT INTO favorites (title, thumbnail, short_description, platform, genre, release_date, developer, game_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?);',
+				[
+					title,
+					thumbnail,
+					short_description,
+					platform,
+					genre,
+					release_date,
+					developer,
+					game_url,
+				],
 				(_, result) => resolve(result),
 				(_, err) => reject(err)
 			)
@@ -48,12 +66,12 @@ export const insertFavorite = (game) => {
 	return promise
 }
 
-export const removeFavorite = (game) => {
+export const removeFavorite = (title) => {
 	const promise = new Promise((resolve, reject) => {
 		db.transaction((tx) => {
 			tx.executeSql(
-				'DELETE FROM favorites WHERE game = ?;',
-				[JSON.stringify(game)],
+				'DELETE FROM favorites WHERE title = ?;',
+				[title],
 				(_, result) => resolve(result),
 				(_, err) => reject(err)
 			)

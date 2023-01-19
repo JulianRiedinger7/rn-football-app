@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { getFavorites } from '../db'
 
 const initialState = {
 	selected: null,
@@ -36,5 +37,17 @@ const gamesSlice = createSlice({
 
 export const { selectGame, changeFavorites, selectCategory, setFavorites } =
 	gamesSlice.actions
+
+export const loadFavorites = () => {
+	return async (dispatch) => {
+		try {
+			const result = await getFavorites()
+			dispatch(setFavorites(result?.rows?._array))
+		} catch (error) {
+			console.warn(error)
+			throw error
+		}
+	}
+}
 
 export default gamesSlice.reducer

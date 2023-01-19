@@ -1,18 +1,18 @@
+import React, { useEffect } from 'react'
 import {
+	Button,
 	FlatList,
 	SafeAreaView,
+	StatusBar,
 	StyleSheet,
 	Text,
-	StatusBar,
 	View,
 } from 'react-native'
-import React, { useEffect } from 'react'
-import { COLORS } from '../../constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { Favorite } from '../../components'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { setFavorites } from '../../store/gamesSlice'
-import { Button } from 'react-native'
+import { COLORS } from '../../constants'
+import { clean, init } from '../../db'
+import { loadFavorites, setFavorites } from '../../store/gamesSlice'
 
 const Favorites = () => {
 	const favorites = useSelector((state) => state.games.favorites)
@@ -21,20 +21,13 @@ const Favorites = () => {
 	const renderItem = ({ item }) => <Favorite game={item} />
 
 	useEffect(() => {
-		getFavoritesStorage()
-	}, [favorites])
+		dispatch(loadFavorites())
+	}, [])
 
-	const getFavoritesStorage = async () => {
-		try {
-			const value = await AsyncStorage.getItem('favorites')
-			setFavorites(JSON.parse(value))
-		} catch (error) {
-			throw error
-		}
-	}
-
-	const onHandleRemoveAll = () => {
+	const onHandleRemoveAll = async () => {
 		dispatch(setFavorites([]))
+		await clean()
+		await init()
 	}
 
 	return (

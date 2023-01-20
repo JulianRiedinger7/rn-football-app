@@ -47,7 +47,7 @@ const Detail = () => {
 	const onHandleFavorite = async () => {
 		setFavorite(!favorite)
 		dispatch(changeFavorites(game))
-		if (favorites.find((favorite) => favorite.id === id)) {
+		if (favorites.find((favorite) => favorite.title === title)) {
 			await removeFavorite(title)
 		} else {
 			await insertFavorite(
@@ -64,7 +64,7 @@ const Detail = () => {
 	}
 
 	useEffect(() => {
-		if (favorites.find((favorite) => favorite.id === id)) {
+		if (favorites.find((favorite) => favorite.title === title)) {
 			setFavorite(true)
 		}
 	}, [favorites])

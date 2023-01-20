@@ -48,6 +48,7 @@ const Profile = ({ navigation }) => {
 		}
 		setUsername('')
 		setImagePicked(null)
+		setLocationPicked(null)
 		navigation.navigate('Home', {
 			displayName: user.displayName,
 			photoURL: user.photoURL,
@@ -153,7 +154,8 @@ const styles = StyleSheet.create({
 	topContainer: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		justifyContent: 'space-around',
+		justifyContent: 'space-between',
+		marginHorizontal: 50,
 		marginBottom: 20,
 	},
 	currentAvatar: {

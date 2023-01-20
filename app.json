@@ -20,7 +20,8 @@
       "backgroundColor": "#202020"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/d9a80c5a-9112-4b5a-8cca-47ecc1bb1336"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -36,9 +37,9 @@
       },
       "permissions": [
         "android.permission.RECORD_AUDIO",
-        "ACCESS_FINE_LOCATION",
-        "CAMERA",
-        "WRITE_EXTERNAL_STORAGE"
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.CAMERA",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
       ],
       "package": "com.julianr.GamingZone"
     },

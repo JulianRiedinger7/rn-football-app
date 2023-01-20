@@ -16,11 +16,11 @@ const gamesSlice = createSlice({
 		},
 		changeFavorites: (state, action) => {
 			const favoriteFinded = state.favorites.find(
-				(favorite) => favorite.id === action.payload.id
+				(favorite) => favorite.title === action.payload.title
 			)
 			if (favoriteFinded) {
 				state.favorites = state.favorites.filter(
-					(favorite) => favorite.id !== action.payload.id
+					(favorite) => favorite.title !== action.payload.title
 				)
 			} else {
 				state.favorites.push(action.payload)

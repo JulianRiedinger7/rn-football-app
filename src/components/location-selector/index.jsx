@@ -1,15 +1,7 @@
-import {
-	Button,
-	StyleSheet,
-	Text,
-	View,
-	Image,
-	ScrollView,
-	Alert,
-} from 'react-native'
-import React, { useState } from 'react'
-import { COLORS } from '../../constants'
 import * as Location from 'expo-location'
+import React, { useState } from 'react'
+import { Alert, Button, StyleSheet, Text, View } from 'react-native'
+import { COLORS } from '../../constants'
 
 const LocationSelector = ({ onHandlePickLocation }) => {
 	const [locationPicked, setLocationPicked] = useState(null)
